@@ -1,6 +1,46 @@
 #To create a pod using pod.yml file
   kubectl create -f pod.yml 
+
 #To check the pods
   kubectl get pods -o=wide
+
 #Sort the nodes according to node Names
 kubectl get pods -o=wide --sort-by"{.spec.nodeName}"
+
+#Pods are getting deployed to the nodes by selecting nodes randomly. 
+
+#How to run a pod on a specific Node?
+Here we will get the labeling and node selector comes into picture. 
+
+#To attach label to a perticular node
+kubectl label nodes <node-name> <label>
+#TO get the node name
+kubectl get nodes
+
+example: 
+  kubectl label nodes ip-172-31-29-9 az=b
+  
+ #To verify the label is attached or not
+  kubectl get nodes --show-labels
+ 
+#We need to add node selector in a pod.yaml file and run yaml file
+  kubectl create -f pod.yml 
+ 
+#Try to create a new pods by changing the pod name in pod.yml file and verify the in which node pod got deployed. 
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
