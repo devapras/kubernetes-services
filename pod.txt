@@ -28,7 +28,10 @@ example:
  
 #Try to create a new pods by changing the pod name in pod.yml file and verify the in which node pod got deployed. 
 
+Note: 
+  Node selector is contnuos to work as expected but in future it is going to be deplicated and it will be replaced by node effinity. Node effinity is an advanced concept which we will see further. 
   
+
   
   
   
