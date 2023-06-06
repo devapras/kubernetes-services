@@ -1,0 +1,6 @@
+#To create a pod using pod.yml file
+  kubectl create -f pod.yml 
+#To check the pods
+  kubectl get pods -o=wide
+#Sort the nodes according to node Names
+kubectl get pods -o=wide --sort-by"{.spec.nodeName}"
