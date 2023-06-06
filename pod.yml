@@ -8,7 +8,7 @@ spec:
       image: nginx:latest
       ports: 
       - containerPort: 80
-      nodeSelector:
-        az: b
+    nodeSelector:
+      az: b
         
  
