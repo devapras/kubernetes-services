@@ -32,6 +32,16 @@ Note:
   Node selector is continuos to work as expected but in future it is going to be deplicated and it will be replaced by node effinity. Node effinity is an advanced concept which we will see further. 
   
 
+#===========================Deleting a pods=================================#
+
+#To delete a single pod
+  kubectl delete pods <pod-name>
+
+#To get pod details
+  kubectl get pods
+  
+#To delete all pods at once
+  kubectl delete pods --all
   
   
   
