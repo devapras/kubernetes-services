@@ -1,0 +1,18 @@
+#To run the repcon.yml to create pods
+    kubectl create -f repcon.yml
+#To see the ReplicationController 
+    kubectl get rc 
+#To check the pods
+    kubectl get pods
+
+#Observation: Refer the pod names and this pods are maintained by the rc.
+
+#Now we can see in which nodes these pods got deployed. 
+    kubectl get pods -o=wide
+
+    #we can see the node where the pods got deployed. 
+
+#Try to change the replicas count from 3 to 4 and try to run the "repcon.yml" using "apply". we cannpt use "kubectl create -f repcon.yml" as we have already created the rc and now we are just modifying the rc. 
+    TO modify or change the state we need to use apply as below. 
+    
+    kubectl apply -f repcon.yml
