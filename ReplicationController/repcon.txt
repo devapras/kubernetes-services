@@ -12,7 +12,8 @@
 
     #we can see the node where the pods got deployed. 
 
-#Try to change the replicas count from 3 to 4 and try to run the "repcon.yml" using "apply". we cannpt use "kubectl create -f repcon.yml" as we have already created the rc and now we are just modifying the rc. 
-    TO modify or change the state we need to use apply as below. 
+#Try to change the replicas count from 3 to 4 and try to run the "repcon.yml" using "apply". 
+we cannpt use "kubectl create -f repcon.yml" as we have already created the rc and now we are 
+just modifying the rc. TO modify or change the state we need to use apply as below. 
     
     kubectl apply -f repcon.yml
