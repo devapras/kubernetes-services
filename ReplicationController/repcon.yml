@@ -9,7 +9,7 @@ spec:
   template:
     metadata:
       labels: 
-        course: k8s-basics
+        env: dev
     spec: 
       containers:
       - name: my-pod
