@@ -1,19 +1,108 @@
 #To run the repcon.yml to create pods
-    kubectl create -f repcon.yml
+
+    $ kubectl create -f repcon.yml
+    
 #To see the ReplicationController 
-    kubectl get rc 
+    
+    $ kubectl get rc 
+    
 #To check the pods
-    kubectl get pods
+    
+    $ kubectl get pods
 
 #Observation: Refer the pod names and this pods are maintained by the rc.
 
 #Now we can see in which nodes these pods got deployed. 
-    kubectl get pods -o=wide
+    
+    $ kubectl get pods -o=wide
 
     #we can see the node where the pods got deployed. 
 
-#Try to change the replicas count from 3 to 4 and try to run the "repcon.yml" using "apply". 
-we cannpt use "kubectl create -f repcon.yml" as we have already created the rc and now we are 
-just modifying the rc. TO modify or change the state we need to use apply as below. 
+#Scenario-2: Try to change the replicas count from 3 to 4 and try to run the "repcon.yml" using "apply". 
+we cannot use "kubectl create -f repcon.yml" as we have already created the rc and now we are 
+just modifying the rc. To modify or change the state we need to use apply as below. 
     
-    kubectl apply -f repcon.yml
+    $ kubectl apply -f repcon.yml
+    
+#Now try to retrieve the rc 
+
+    $ kubectl get rc 
+    
+#Now we can see that the desired and current state will be 4. 
+
+#Now lets try to retrieve the pods
+
+    $ kubectl get pods -o=wide --sort-by="{.spec.nodeName}"
+    
+    #We an see that nodes where the pods got deployed. 
+    
+#Scenario-3: Now change the replicas from 4 to 2 and try to run the the yml file. 
+
+    $ kubectl apply -f repcon.yml
+    
+#Now try to check the pods
+
+    $ kubectl get pods -o=wide --sort-by="{.spec.nodeName}"
+    
+    #Now we can see that only 2 pods running on each node. 
+   
+#What if Node goes down? Its not in k8s hand to manage node. we have configured the node in aws ec2 instance right. 
+    
+    1. To check this, goto AWS console and try to stop the node. 
+    2. Now try to get the nodes whether k8s detected the node failure or not. 
+    
+    $ kubectl get nodes 
+    
+    We can see that one of the node status changes to "NotReady". It means that k8s has detected the node failure. 
+    
+    Lets see how our RC has reacted to this node failure. 
+    
+    Lets try to run to get pods.
+    
+    $ kubectl get pods -o=wide
+    
+    You can see that the 2 pods are still running. So that means the RC has not yet detected the node failure. Lets give it some time to detect the node failure. 
+    
+    Now try to run get pods
+    
+    $ kubectl get pods -o=wide
+    
+    Now you can see that RC is "Terminating" the pod which is on the failed node and creating the new pod which is in "containerCreating" status in the node1 which is      available. 
+
+    This is like a dissostor recovery or this is like a auto healing process where RC is helping to maintain the desired state of having 2 pods. 
+    
+    Now if we run 
+    
+    $ kubectl get pods -o=wide
+    
+    We can see that pod is running now. 
+    We have successfully simulated the node failure in scenario-4. 
+    
+    
+ #Now try to describe the RC and lets see what info we get. 
+ 
+    $ kubectl describe rc
+    
+    As you can see that detailed information about the RC. We can see namespace, labels, selectors and the annotations. And we can also see that replicas currect and desired state, pods status, pods template and then the events that occurs(This will give the details history which will use for debug). 
+    
+    To practice RC, try to change the container image and play with it. 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+    
