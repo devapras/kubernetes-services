@@ -1,0 +1,57 @@
+#Before going to service we can play little with labels
+
+    $ kubectl get nodes
+
+    $ kubectl get pods -o=wide --show-labels
+
+    We can see that 3 pods are running and those pods are created using the rc and all of them
+    having the labels env=dev. 
+
+    Now lets say we want to add a new label to a existing pod 
+
+    $ kubectl label pods pod-name newTag=newValue
+
+    Now cheeck the pods labes by executing below command
+
+    $ kubectl get pods -o=wide --show-labels
+
+    Now you can see that one of the pod having the labels with the new tag. 
+
+    If we want to delete the label env=dev for any pod
+
+    $ kubectl label pods pod-name env- 
+
+    It will delete the label for that pod ("env-" : it means it will delete the env label for this pod)
+
+    Now lets check our pods 
+
+    $ kubectl get pods -o=wide --show-labels
+
+    Observe that the label env=dev has been deleted from this perticular pod but what is happend here 
+    it has deleted the label and we can see that new pod gets created with the label env=dev. 
+    Why this new pod created?
+    If the pods are created using replicated controller and you delete the label which was mentioned 
+    in the manifest file so this env was part of the manifest file and you delete this label from 
+    the pod, you are essentially modifying the current state of the pod and hence your deviating 
+    from the desired state. 
+
+    Remember the rc said that you need to have three pods with the label 'env=dev'. But, since you
+    deleted the label from one of the pods, rc notice that. Hey, your current state is not matching the 
+    desired state. So, let me go ahead and create another Pod for you. 
+
+    So, that's exactly why it has created this new Pod with the label 'env=dev'.
+
+    Now, note that this explictly modified Pod(the pod which we have added the label newTag=newValue)
+    is not the responsibility of the user or not the rc because you fiddled with it, you changed it. 
+
+    So it is an external pod, you might call it. Which is not under controll of the rc. So, in a sense, you broke
+    the contract with the rc, and now you need to manage it on your own. 
+
+#Now try to get the rc
+
+    $ kubectl get rc 
+
+    you can see that the desired state is three, and the current is three. So, that rc has done its job.
+    to maintain the three pods, all with the 'env=dev' lables. 
+
+
