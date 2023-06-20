@@ -49,9 +49,9 @@
 
 #Now try to get the rc
 
-    $ kubectl get rc 
+    $ kubectl get rc  
 
-    you can see that the desired state is three, and the current is three. So, that rc has done its job.
+    you can see that the desired state is three, and the current is three. So, that rc has done its job
     to maintain the three pods, all with the 'env=dev' lables. 
 
 
