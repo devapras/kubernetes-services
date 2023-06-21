@@ -55,3 +55,109 @@
     to maintain the three pods, all with the 'env=dev' lables. 
 
 
+#Create the service.yml file and try to run the file
+
+    $ kubectl create -f service.yml
+
+    It will create the service 
+
+    Now check the created service
+
+    $ kubectl get svc 
+
+    Observe that Type is NodePort and it has provisioned Cluster-IP as well as the Port mapping. 
+
+    Describe the service to know the detailed info
+
+    $ kubectl describe svc my-svc
+
+    Here we are going to have information about such as name of the service, the label, the selector 
+    information, the type nodePort, the port information and the Endpoints that it has created and which 
+    containes IP addressess of all the pods and the port to which it mappes to the application containers.
+    So, the Endpoints is the collection of Ip addressess of the pods that the service has gone ahead and selected. 
+
+    Now lets verify that it has selected correct pods. 
+
+    $ kubectl get pods -o=wide --show-labels
+
+    Observe that labels env=dev has for 2 pods. 
+
+#Lets try to connect this service from the outside of the Cluster.
+
+    Lets first get the Public IP address of the node. FOr this we should go back to the AWS console
+    and select Public IP address of the Node-1. 
+    Remember that you can only reach out to this node using its public IP address and not its Private IP. 
+
+    Now copy the Public IP address and open the browser and paste it and the port on which we have exposed 
+    this service, the NodePort was 30150. 
+
+        Ex: Node-IP:NodePort
+        $ Public-IP-address:30150  --> search in browser. 
+            
+
+        We have successfully reached the nginx container that means we have reached our containarised application. 
+        This conforms that our service is working. 
+
+        Now we know that it(Node) has selected 2 pods. 
+
+        Now lets go back to the Node-2 and copy its public IP address and do the same thing. 
+
+        Ex: Node-IP:NodePort
+        $ Public-IP-address:30150  --> search in browser. 
+
+        On the second node as well we have successfully reached to the pod which contains the Nginx container. 
+
+        The advantage of using the service here is that even if your underlying pods on the node die,
+        you should still be able to the underlying containarised application. 
+        The pods are come and go and it should not affect your application. 
+
+        At this stage you must have understood the cluster ID of the service is used to access the 
+        cluster withing itself. Node ID and NodePort is used to access out side. However, we had to 
+        use the Node IDs right? 
+        What if Nodes themselves become unavailable? What happens then?
+        Like one of the availability zone may go down or the node or the hardware can go down 
+        as well, right?
+        So, we mentioned that frontend pods need to connect only to the service, but can there be a 
+        sinle point of connectivity here?
+
+        To answer all these we need to create a another type of service which is called a load balancer. 
+        and we saw that one of the types was load balancer right during our theory lecture. 
+
+        This type will give us a single external IP that can be used to access the service, and that can be 
+        used as a destination for the cloud load balancers. So, what is mean over here is that instead of using 
+        either pod IP address or Node IP addresses, all we want is a single IP address, and behind that,
+        all failures should be masked. So, node can come and go, pods can come and go and should not affect 
+        your application. That is possible usig the Load Balancer type of service. 
+
+        So, i'm going to show you just how it works. 
+
+        Lets create a file "service-lb.yml"
+
+        Create service object here or manifest file which is for the load balancer. And you will see the 
+        matadata and spec almost same as to that of nodePort service. The only difference is that we have a type
+        load balancer, and we don't have a concept of nodePort. 
+
+        So, that manifest file is as simple as you can get. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
