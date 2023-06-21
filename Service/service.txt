@@ -139,7 +139,35 @@
 
         So, that manifest file is as simple as you can get. 
 
+        Once you can create a file. 
 
+        $ kubectl create -f service-lb.yml
+
+        Service will be created. 
+
+        $ kubectl get svc
+
+        And you will see that the load balancer service is in the pending status, or the 
+        external IP is not yet assigned. 
+        Now, one thing you need to or there are a couple of things that you need to watch out for, is that
+        first of all, it takes a few minutes for the load balancer type of service to come up and running.
+        And the second thing is that, due to the nature of using kubeadmin over here, we cannot provision
+        a load balancer at this stage, you have to use the GKC or Google Could Platform in order to get this 
+        external IP address, but to give you the concept, to teach you the concept, just Remember that 
+        after successful implementation of a load balancer type of service, you will be getting an external 
+        IP address over here. This external IP address you can take and you can assign an external load balancer, 
+        fo example, Amazon Web Services, elastic load balancer. So you can send the traffic to this particular 
+        IP address, and it will do all the routing for you. So, the underlying nodes you can change, or 
+        you can add new nodes, you can delete nodes, or you can add new pods or delete new pods, and 
+        it should not bother your application. 
+
+        I hope you understood the difference between the type nodePort service and the type load balancer service. 
+
+#How to delete a service?   
+
+    $ kubectl delete svc my-svc        
+
+    $ kubectl get svc 
 
 
 
