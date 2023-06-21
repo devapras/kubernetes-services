@@ -169,7 +169,7 @@
 
     $ kubectl get svc 
 
-
+Note we can use 'svc' or 'service'
 
 
 
